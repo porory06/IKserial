@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>등록된 시리얼 넘버 확인</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #444;
+    }
+    .delete-button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .delete-button:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>등록된 시리얼 넘버 확인</h1>
+    <table id="serial-table">
+      <thead>
+        <tr>
+          <th>성함</th>
+          <th>연락처</th>
+          <th>이메일</th>
+          <th>제품명</th>
+          <th>시리얼 넘버</th>
+          <th>유닛 넘버</th>
+          <th>등록 날짜</th>
+          <th>삭제</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 데이터를 여기에 표시 -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    fetch('https://raw.githubusercontent.com/porory06/serial-number-page/main/data.json')
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.getElementById('serial-table').querySelector('tbody');
+        data.forEach((item, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.phone}</td>
+            <td>${item.email || '-'}</td>
+            <td>${item.product}</td>
+            <td>${item.serial}</td>
+            <td>${item.unit}</td>
+            <td>${item.date}</td>
+            <td><button class="delete-button" onclick="deleteRow(${index})">삭제</button></td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => console.error('Error loading data:', error));
+
+    function deleteRow(index) {
+      alert('삭제 기능은 아직 준비 중입니다.');
+    }
+  </script>
+</body>
+</html>
